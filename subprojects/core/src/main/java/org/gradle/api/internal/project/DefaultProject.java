@@ -605,7 +605,7 @@ public class DefaultProject extends AbstractPluginAware implements ProjectIntern
 
     @Override
     public ModelContainer getModel() {
-        return services.get(ProjectStateRegistry.class).stateFor(this);
+        return getMutationState();
     }
 
     @Override
