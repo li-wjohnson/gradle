@@ -138,14 +138,20 @@ public class TransformationStep implements Transformation, TaskDependencyContain
 
     private void isolateTransformerParameters(FileCollectionFingerprinterRegistry fingerprinterRegistry) {
         if (!transformer.isIsolated()) {
-            owner.withMutableState(() -> {
-                isolationLock.withLock(() -> {
-                    if (!transformer.isIsolated()) {
-                        transformer.isolateParameters(fingerprinterRegistry);
-                    }
-                });
-            });
+            if (!owner.hasMutableState()) {
+                owner.withLenientState(() -> isolateExclusively(fingerprinterRegistry));
+            } else {
+                isolateExclusively(fingerprinterRegistry);
+            }
         }
+    }
+
+    private void isolateExclusively(FileCollectionFingerprinterRegistry fingerprinterRegistry) {
+        isolationLock.withLock(() -> {
+            if (!transformer.isIsolated()) {
+                transformer.isolateParameters(fingerprinterRegistry);
+            }
+        });
     }
 
     @Override
