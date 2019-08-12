@@ -16,12 +16,11 @@
 
 package org.gradle.performance.regression.corefeature
 
-import org.gradle.performance.AbstractCrossVersionGradleInternalPerformanceTest
+import org.gradle.performance.AbstractCrossVersionGradleProfilerPerformanceTest
 import org.gradle.performance.WithExternalRepository
-import spock.lang.Ignore
 import spock.lang.Unroll
 
-class LargeDependencyGraphPerformanceTest extends AbstractCrossVersionGradleInternalPerformanceTest implements WithExternalRepository {
+class LargeDependencyGraphPerformanceTest extends AbstractCrossVersionGradleProfilerPerformanceTest implements WithExternalRepository {
 
     private final static TEST_PROJECT_NAME = 'excludeRuleMergingBuild'
     public static final String MIN_MEMORY = "-Xms800m"
@@ -29,7 +28,7 @@ class LargeDependencyGraphPerformanceTest extends AbstractCrossVersionGradleInte
 
     def setup() {
         runner.minimumVersion = '4.8'
-        runner.targetVersions = ["5.7-20190722220035+0000"]
+        runner.targetVersions = ["5.7-20190807220120+0000"]
     }
 
     def "resolve large dependency graph from file repo"() {
@@ -77,9 +76,8 @@ class LargeDependencyGraphPerformanceTest extends AbstractCrossVersionGradleInte
         locking << [false, false, true, true]
     }
 
-    @Ignore // TODO activate once PR #10097 is merged
     def "resolve large dependency graph with subgraph constraints"() {
-        runner.minimumVersion = '5.7'
+        runner.minimumVersion = '5.7-20190807220120+0000'
         runner.testProject = TEST_PROJECT_NAME
         startServer()
 
