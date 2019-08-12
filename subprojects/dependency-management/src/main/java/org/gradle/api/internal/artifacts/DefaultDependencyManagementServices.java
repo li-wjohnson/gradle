@@ -394,7 +394,6 @@ public class DefaultDependencyManagementServices implements DependencyManagement
             ValueSnapshotter valueSnapshotter,
             ProjectStateRegistry projectStateRegistry,
             DomainObjectContext domainObjectContext,
-            ProjectFinder projectFinder,
             ArtifactTransformParameterScheme parameterScheme,
             ArtifactTransformActionScheme actionScheme,
             FileCollectionFingerprinterRegistry fileCollectionFingerprinterRegistry,
@@ -408,7 +407,7 @@ public class DefaultDependencyManagementServices implements DependencyManagement
                 valueSnapshotter,
                 fileCollectionFactory,
                 fileCollectionFingerprinterRegistry,
-                new DomainObjectProjectStateHandler(projectStateRegistry, domainObjectContext, projectFinder),
+                new DomainObjectProjectStateHandler(projectStateRegistry, domainObjectContext),
                 parameterScheme,
                 actionScheme
             );
